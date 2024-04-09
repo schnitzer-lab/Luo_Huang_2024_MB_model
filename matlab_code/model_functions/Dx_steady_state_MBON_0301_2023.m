@@ -4,9 +4,7 @@ w_pun = [27.85;0;11.38;0;0;0];
 % The firing rate of PPL1-gamma1 neuron increased by 27.85 +/- 3.28 Hz during shock, 
 % while PPL1-a3 increased by 11.38  +/- 2.53 Hz.
 
-% B_MBON = [33.5847; 7.2902; 16.3974];% from file OdorData.xlsx
-B_MBON = [35.2; 9.0; 11.2];% new baseline value
-% max_MBON = B_MBON +[41.7; 8.9; 20.3];% ~ mean + std
+B_MBON = [35.2; 9.0; 11.2];% new baseline value % from file OdorData(revision).xlsx
 max_MBON = B_MBON +[36.46; 8.9; 19.96];% ~ mean + std
 
 %{
