@@ -1,10 +1,14 @@
 %clc,
 clear
-addpath(fulfile('..','model_functions'))
-addpath(fulfile('..','output_functions'))
+addpath(fullfile('..','model_functions'))
+addpath(fullfile('..','output_functions'))
 %%
+%{ 
+This script fit the experimental data by 2-module model and 3-module model.
+
 % if is_simplified_model == true : 2-module model
 % if is_simplified_model == false: 3-module model
+%}
 for is_simplified_model = [true false]
     % some of the synaptic weights is close to 0. 
     % We can try to set them to be 0 by let is_keep_0_weight = false;
@@ -13,30 +17,13 @@ for is_simplified_model = [true false]
     % confirm the parameter is not a local minimum.
     is_use_ga = false;% true
     %% load original data
-    %data_ori_filename = fullfile('..','..','data_Cheng','Cheng_24hr_data');
-    data_ori_filename = fullfile('..','..','data_original','Cheng_24hr_data (revision)');
-    
-    data_ori = cat(4, xlsread(data_ori_filename,'ACVvsETA'), ...
-                      xlsread(data_ori_filename,'OCTvsBEN'));
-    
+    data_ori_filename = fullfile('..','..','data_and_parameters','Cheng_24hr_data (revision)');
+    [Dx_mean, Dx_SEM] = load_original_data(data_ori_filename, is_simplified_model);
     %{
     Dimension 1: PPL1-v1pedc, PPL1-a'2a2, PPL1-a3, MBON-v1pedc, MBON-a2sc, MBON-a3
     Dimension 2: CS+, CS-
     Dimension 3: Pre-traing, after 3x training, after 6x training, 1hr memory, 3hr, 24hr
     Dimension 4: ACV vs ETA, OCT vs BEN
-    %}
-    Dx_mean = permute(cat(3,data_ori(1:3:end,1:6,:,:),data_ori(1:3:end,9:14,:,:)),[1 3 2 4]);
-    Dx_SEM  = permute(cat(3,data_ori(2:3:end,1:6,:,:),data_ori(2:3:end,9:14,:,:)),[1 3 2 4]);
-    
-    if is_simplified_model
-        % not include PPL1-a'2a2 MBON-a2sc data
-        Dx_mean([2 5],:,:,:) = nan;
-        Dx_SEM([2 5],:,:,:) = nan;
-    end
-    %{
-    % not include the 24hr data
-    Dx_mean = Dx_mean(:,:,1:end-1,:);
-    Dx_SEM = Dx_SEM(:,:,1:end-1,:);
     %}
     %% set parameter range
     
@@ -48,7 +35,7 @@ for is_simplified_model = [true false]
     The 1st row corresponds to CS+.
     The 2nd row corresponds to CS-.
     The first n_DAN columns correspond to attractive odors (ACV vs ETA).
-    The last n_DAN columns correspond to repellent o dors (OCT vs BEN).
+    The last n_DAN columns correspond to repellent odors (OCT vs BEN).
     %}
     W_KD = ones(n_odor, 2*n_DAN);
     %{
@@ -214,22 +201,8 @@ for is_simplified_model = [true false]
     
 
     %% plot data
-    fig_h = [0 0];
     [error_weighted,Dx_DAN_MBON] = Error_weighted(para_mu);
-
-    for fig_i = 1:2
-        fig_h(fig_i) = figure;
-        axis_h = zeros(3,2);
-        for axis_i = 1:numel(axis_h)
-            axis_h(axis_i)=subplot(size(axis_h,2),size(axis_h,1),axis_i); hold on;
-        end
-        axis_h=axis_h';
-        plot_Dx_data_new(axis_h,Dx_mean(:,:,:,fig_i),Dx_SEM(:,:,:,fig_i),Dx_DAN_MBON(:,:,:,fig_i));
-    end
-    if is_simplified_model
-        delete(axis_h(:,2))
-    end
-
+    [fig_h, error_bar_h, fit_h] = plot_Dx_data(Dx_mean,Dx_SEM,Dx_DAN_MBON);
     Error_sq_sum(para_mu)
     %% save figures
     para_mat_cell = parameter_vec2mat(para_mu,mat_lu_cell);
@@ -238,10 +211,10 @@ for is_simplified_model = [true false]
         '_',date,'_',num2str(3-is_simplified_model),'modules']);
     save(fig_name,'para_mu','para_CI','mat_lu_cell','para_rand')
 
-    saveas(fig_h(1),[fig_name,'_1'])
-    saveas(fig_h(2),[fig_name,'_2'])
-    print(fig_h(1),[fig_name,'_1'],'-dtiff','-r300')
-    print(fig_h(2),[fig_name,'_2'],'-dtiff','-r300')
+    saveas(fig_h(1),[fig_name,'_attractive'])
+    saveas(fig_h(2),[fig_name,'_repulsive'])
+    print(fig_h(1),[fig_name,'_attractive'],'-dtiff','-r300')
+    print(fig_h(2),[fig_name,'_repulsive'],'-dtiff','-r300')
     %% write parameters into xls file. 
     if is_simplified_model
         xls_start = 'F3';

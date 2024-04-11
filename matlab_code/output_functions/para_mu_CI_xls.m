@@ -1,4 +1,7 @@
 function xls_mat = para_mu_CI_xls(para_mu,para_CI,mat_lu_cell)
+%{
+This function converts the parameters into the cell for xls output.
+%}
 para_mat_cell = [parameter_vec2mat(para_mu,mat_lu_cell), ...
                  parameter_vec2mat(para_CI(:,1),mat_lu_cell), ...
                  parameter_vec2mat(para_CI(:,2),mat_lu_cell)];
@@ -37,7 +40,7 @@ MBON-α3 to PPL1-α3
 for col_i = 1:size(xls_mat,2)
     xls_mat(:,col_i) = ...
         [para_mat_cell{2,col_i}/3;% The parameter in the fitting is the AAH of 3 training pulses.
-         para_mat_cell{3,col_i}(1,1) * 11.38/3;
+         para_mat_cell{3,col_i}(1,1) * 11.38/3;% The parameter in the fitting is the AAH of 3 training pulses.
          para_mat_cell{1,col_i}([1:3,7:9,4:6])';
          para_mat_cell{4,col_i}(4,[1:3 5 6])';
          para_mat_cell{4,col_i}(5,[2 3])';

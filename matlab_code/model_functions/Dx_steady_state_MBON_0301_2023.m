@@ -1,4 +1,11 @@
 function [Dx_DAN_MBON,data_all] = Dx_steady_state_MBON_0301_2023(para_mat_cell,exp_struct)
+%{
+This function simulate the learning process by recurrent model.
+
+para_mat_cell: the parameters in cell format.
+exp_struct: the struct of training protocol in experiments.
+%}
+
 %% parameters from experiments and literature
 w_pun = [27.85;0;11.38;0;0;0];
 % The firing rate of PPL1-gamma1 neuron increased by 27.85 +/- 3.28 Hz during shock, 
@@ -7,20 +14,8 @@ w_pun = [27.85;0;11.38;0;0;0];
 B_MBON = [35.2; 9.0; 11.2];% new baseline value % from file OdorData(revision).xlsx
 max_MBON = B_MBON +[36.46; 8.9; 19.96];% ~ mean + std
 
-%{
-36.58333333
-5.171197915
-
-6.122222222
-2.813613291
-
-18.01666667
-2.27890524
-%}
-
-KC_adapt = 0.05;
+KC_adapt = 0.05;% the adaptation 
 %% input parameters
-
 
 fw0 = para_mat_cell{2};%*eye(2);%
 % During the imaging, there was no punishment input. The punishment only
@@ -175,4 +170,32 @@ for exp_i = 1:length(exp_struct)
     
 end
 
+end
+
+
+function [Dx_DAN_MBON,Dx_0] = solve_DAN_MBON(Dx_KC, x_punish,W_KM, w_punish, W_mat, fun_act, Ab_DAN_MBON)
+%{
+This function solve the nonlinear function of MBON
+
+Dx_KC: KC input, n_odor*1 column vector
+x_punish: punishment input, single value
+W_KM: weight from KCs to MBON, n_odor*n_MBON matrix
+w_punish: weight of punishment n_DAN*1 column vector
+W_mat = [0 0; W_MD W_MM]: weight matrix between MBON and DAN 
+        (n_DAN+n_MBON)*(n_DAN+n_MBON) matrix
+fun_act: activation function
+Ab_DAN_MBON: The amplitue and bias of DAN and MBON. (n_DAN+n_MBON)*2 matrix
+%}
+
+B_DAN_MBON = Ab_DAN_MBON(:,1).*fun_act(Ab_DAN_MBON(:,2));
+WDx_KC_pun = W_KM'*Dx_KC + w_punish*x_punish;
+WDx_KC_pun_b = WDx_KC_pun + Ab_DAN_MBON(:,2);
+fun_Dx = @(Dx)Ab_DAN_MBON(:,1).*fun_act(WDx_KC_pun_b + W_mat'*Dx) - B_DAN_MBON - Dx;
+
+Dx_0 = (eye(size(W_mat))-W_mat)^-1 * WDx_KC_pun;
+for re_i = 1:10
+Dx_0 = fun_Dx(Dx_0) + Dx_0;
+end
+Dx_DAN_MBON  = Dx_0;
+%Dx_DAN_MBON  = fsolve(fun_Dx,Dx_0);
 end

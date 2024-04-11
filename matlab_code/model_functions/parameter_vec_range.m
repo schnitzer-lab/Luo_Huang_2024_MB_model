@@ -1,4 +1,10 @@
 function para_lu = parameter_vec_range(mat_lu_cell)
+%{
+This function convert the upper and lower bonds of parameters into vector
+format.
+If the upper and lower bonds are different, put it into the vector.
+%}
+
 para_lu = zeros(0,2);
 for mat_i = 1:numel(mat_lu_cell)
     is_diff_lu = mat_lu_cell{mat_i}(:,:,1) ~= mat_lu_cell{mat_i}(:,:,2); 

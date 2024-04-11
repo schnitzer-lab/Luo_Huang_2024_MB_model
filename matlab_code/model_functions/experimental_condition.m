@@ -1,6 +1,17 @@
 function [exp_para, exp_struct] = experimental_condition(exp_para)
+%{
+This function create the training protocols of experments.
+exp_para: if the input exp_para is [], this function output a default
+protocol.
+Then the users can modify the parameters in exp_para and run this function
+again to pack the parameters into exp_struct.
+exp_struct: the standard format of the experimental protocol used in the
+simulation function Dx_steady_state_MBON_0301_2023().
+%}
+
 %% set default value
 if ~isfield(exp_para, 'session')
+    % the parameters of each type of sessions
     exp_para.session = ...
         struct('name',   {'test';'imaging';'training'}, ...
                't_CS_plus' ,{  5;        5;       30}, ...
@@ -11,11 +22,14 @@ end
 
 %---rest session
 if ~isfield(exp_para, 'rest_t')
+    % The length of all resting sessions is stored in the rest_t column vector.
     exp_para.rest_t = 3600; 
-    % the length of all resting sessions is stored in the rest_t column vector 
 end
 %---session list
 if ~isfield(exp_para, 'session_list')
+    % The list of all the sessions
+    % This function creates the exp_struct by stacking all the sessions by
+    % the list.
     exp_para.session_list = ...
         {'imaging';
          'training';
