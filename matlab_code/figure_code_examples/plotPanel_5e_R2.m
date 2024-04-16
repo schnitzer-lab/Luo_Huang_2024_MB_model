@@ -7,7 +7,7 @@ addpath('customcolormap\')
 
 Dx_steady_state_MBON_revision = @(x,y)Dx_steady_state_MBON_0301_2023(x,y);
 
-is_simplified_model = [true false]
+is_simplified_model = false;%true;%
 %% load parameters
 if is_simplified_model
     load('Dx_steady_state_nonlinear_3_27-Mar-2023_2modules') %%Extended Data Fig10j
