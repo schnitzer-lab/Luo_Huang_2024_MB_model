@@ -1,8 +1,5 @@
 clc,clear all
-addpath(fullfile('..','..','data_and_parameters'))
-addpath(fullfile('..','model_functions'))
-addpath(fullfile('..','output_functions'))
-%Dx_steady_state_MBON_revision = @(x,y)Dx_steady_state_MBON_0301_2023(x,y);
+config_path_and_function
 %%
 %{ 
 This script plot figure 5c (3-module model) and S10j (2-module model).

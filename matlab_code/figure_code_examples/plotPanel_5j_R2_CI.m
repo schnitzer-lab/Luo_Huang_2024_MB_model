@@ -1,6 +1,6 @@
 clear all
 clc
-
+config_path_and_function
 load('Dx_steady_state_nonlinear_3_27-Mar-2023_3modules')
 
 figure_type_list = {'ACV_EtA','OCT_BEN'};

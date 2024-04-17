@@ -1,6 +1,6 @@
 clear all
 clc
-
+config_path_and_function
 load('Dx_steady_state_nonlinear_3_27-Mar-2023_3modules')
 
 odor_valence = [-3.42;-4.58;-5.60]; % ACV/EtA
