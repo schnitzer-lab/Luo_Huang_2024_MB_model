@@ -1,6 +1,6 @@
 This program is the code for simulating the recurrent equation model and fitting it to experimental data.
 
-The original data is the file “Cheng_24hr_data (revision).xlsx” in folder “data_and_parameters”.
+The original data is in the file “data_and_parameters\Cheng_24hr_data (revision).xlsx”.
 
 The parameters from curve fitting are the files “Dx_steady_state_nonlinear_3_27-Mar-2023_2modules.mat” and “Dx_steady_state_nonlinear_3_27-Mar-2023_3modules.mat” in folder “data_and_parameters”.
 
@@ -8,9 +8,9 @@ The functions of the recurrent equation model are in the folder “matlab_code\m
 
 The functions used for reading and writing data and figures are in the folder “matlab_code\output_functions”.
 
-The code for fitting the experimental data is in the folder “matlab_code\model_fitting”
+The code for fitting the experimental data is in the folder “matlab_code\model_fitting”.
 
-The example codes for drawing figures in the paper are in the folder “matlab_code\figure_code_examples”
+The example codes for drawing figures in the paper are in the folder “matlab_code\figure_code_examples”.
 
 
 
