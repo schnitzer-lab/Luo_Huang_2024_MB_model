@@ -12,7 +12,7 @@ This script plot figure 5c (3-module model) and S10j (2-module model).
 %}
 for is_simplified_model = [true false]
     %% load original data
-    data_ori_filename = fullfile('..','..','data_and_parameters','Cheng_24hr_data (revision)');
+    data_ori_filename = fullfile('..','..','data_and_parameters','Imaging_24hr_data');
     [Dx_mean, Dx_SEM] = load_original_data(data_ori_filename, is_simplified_model);
     %{
     Dimension 1: PPL1-v1pedc, PPL1-a'2a2, PPL1-a3, MBON-v1pedc, MBON-a2sc, MBON-a3
