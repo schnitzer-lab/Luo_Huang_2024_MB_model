@@ -1,6 +1,6 @@
 This program is the code for simulating the recurrent equation model and fitting it to experimental data.
 
-The original data is in the file “data_and_parameters\Cheng_24hr_data (revision).xlsx”.
+The original data is in the file “data_and_parameters\Imaging_24hr_data.xlsx”.
 
 The parameters from curve fitting are the files “Dx_steady_state_nonlinear_3_27-Mar-2023_2modules.mat” and “Dx_steady_state_nonlinear_3_27-Mar-2023_3modules.mat” in folder “data_and_parameters”.
 
