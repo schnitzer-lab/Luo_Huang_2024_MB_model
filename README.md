@@ -1,7 +1,7 @@
 This program is the source code for simulating and fitting the recurrent equation model to experimental data.
 
 System requirements
-  MATLAB 2022a
+  MATLAB v2020b or v2022a
   
 Installation guide
   These source codes are MATLAB scripts which do not need to be installed. 
