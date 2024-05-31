@@ -24,7 +24,7 @@ Demo and Instructions for use
  
         'plotPanel_5c_S10j_R2_CI.m'  plots Figure 5c and Extended data Figure 10j.
         
-        'plotPanel_5d_S10h_S10m.m'   plots Figure 5d.
+        'plotPanel_5d.m'             plots Figure 5d.
         
         'plotPanel_5e_R2.m'          plots Figure 5e.
         
@@ -34,7 +34,7 @@ Demo and Instructions for use
         
         'plotPanel_5h_R2_CI.m'       plots Figure 5h.
         
-        'plotPanel_5i_R2.m'          plots Figure 5i and Extended data Figure 10m.
+        'plotPanel_5i_R2.m'          plots Figure 5i, Extended data Figure 10m and 10h.
         
         'plotPanel_5j_R2_CI.m'       plots Figure 5j.
         
