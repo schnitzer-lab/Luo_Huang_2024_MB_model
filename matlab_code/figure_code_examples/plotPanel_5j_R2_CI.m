@@ -16,7 +16,7 @@ for figure_type_i= 1:length(figure_type_list)
     end
 
     t_extinction_list = [nan 10 120]*60-300-250;
-    output_data_matrix = nan(length(para_rand),6,3,6,length(t_extinction_list));
+    output_data_matrix = nan(length(para_rand),3,3,6,length(t_extinction_list));
     for i = 1:length(para_rand)
 
         para_mat_cell = reset_parameter_by_valance(para_rand(:,i),mat_lu_cell,odor_valence);
@@ -29,7 +29,7 @@ for figure_type_i= 1:length(figure_type_list)
         for t_extinction_i = 1:length(t_extinction_list)
             t_extinction_curr = t_extinction_list(t_extinction_i);
             if isnan(t_extinction_curr)
-                % create the defualt experimental condition listexp_para
+                % create the default experimental condition listexp_para
                 [exp_para, exp_struct] = experimental_condition([]);
 
                 exp_para.session_list = ...
@@ -71,23 +71,23 @@ for figure_type_i= 1:length(figure_type_list)
                 else
                     exp_para.rest_t(end) = rest_t_list(rest_t_i) - exp_para.rest_t(1) ...
                         - exp_para.session(4).n*(exp_para.session(4).t_CS_plus ...
-                        +exp_para.session(4).t_ISI ...
-                        +exp_para.session(4).t_CS_minus ...
-                        +exp_para.session(4).t_ISI);
+                                                +exp_para.session(4).t_ISI ...
+                                                +exp_para.session(4).t_CS_minus ...
+                                                +exp_para.session(4).t_ISI);
                 end
                 [exp_para, exp_struct] = experimental_condition(exp_para);
                 exp_struct(4).t_length = 300;
                 exp_struct(4*(exp_para.session(3).n+1)).t_length = 300;
 
                 if exp_para.rest_t >= 0
-                    [Dx_DAN_MBON{i},data_all] = Dx_steady_state_MBON_revision(para_mat_cell,exp_struct);
+                    [Dx_DAN_MBON,data_all] = Dx_steady_state_MBON_revision(para_mat_cell,exp_struct);
                     %{
                     Dx_DAN_MBON: 
                     first dimension: DAN,MBON; 
                     second dimension: CS+, CS-; 
                     third dimension: time points.
                     %}
-                    output_data_matrix(i,:,1:2,:,t_extinction_i) = permute(Dx_DAN_MBON{i}(:,:,:),[4 3 2 1 5]);
+                    output_data_matrix(i,:,1:2,:,t_extinction_i) = permute(Dx_DAN_MBON(:,:,[1 2 end]),[4 3 2 1 5]);
 
                 elseif rest_t_list(rest_t_i) <= t_extinction_curr
                     output_data_matrix(i,:,1:2,:,t_extinction_i) = ...
@@ -149,6 +149,7 @@ for i = 1:3
 end
 
 %% plot MBON-a3
+figure, 
 MBON_a3_attractive = [MemoryTrace_delta_attractive_3hr_avg{6,1}(1,1), 0, 0, 0, MemoryTrace_delta_attractive_3hr_avg{6,1}(1,2), ...
     0, 0, 0, MemoryTrace_delta_attractive_3hr_avg{6,1}(1,3),0]; 
 MBON_a3_repulsive = [0, MemoryTrace_delta_repulsive_3hr_avg{6,1}(1,1), 0, 0, 0, MemoryTrace_delta_repulsive_3hr_avg{6,1}(1,2), ...

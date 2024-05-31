@@ -123,11 +123,11 @@ for neuron_inx = 1:3
     %------------------------------------------------------------------------
     axis_h(1,neuron_inx) = subplot(7,3,neuron_inx);
     imagesc((rest_t_list+135)/3600,odor_valence_list, ...
-        MemoryTrace_CSp{neuron_inx,1}(:,2:end),[-40,40])
+        MemoryTrace_CSp{neuron_inx,1}(:,2:end)-MemoryTrace_CSp{neuron_inx,1}(:,1),[-40,40])
     
     axis_h(2,neuron_inx) = subplot(7,3,3+neuron_inx);
     imagesc((rest_t_list+135)/3600,odor_valence_list, ...
-        MemoryTrace_CSm{neuron_inx,1}(:,2:end),[-40,40])
+        MemoryTrace_CSm{neuron_inx,1}(:,2:end)-MemoryTrace_CSm{neuron_inx,1}(:,1),[-40,40])
     
     axis_h(3,neuron_inx) = subplot(7,3,neuron_inx+6);
     imagesc((rest_t_list+135)/3600,odor_valence_list, ...
@@ -161,11 +161,12 @@ subplot(7,3,13);title('MBON-v1')
 subplot(7,3,14);title('MBON-a2')
 subplot(7,3,15);title('MBON-a3')
 
-%%
+%% save figures
+%{
 saveas(fig_h, figure_name, 'fig')
 print('-dtiff','-r300',[figure_name,'.tif'])
 %print('-dpdf',[fullfile(folder_name,out_file_name),'.pdf'])
 print('-dmeta',[figure_name,'.emf'])
-
+%}
 
 end

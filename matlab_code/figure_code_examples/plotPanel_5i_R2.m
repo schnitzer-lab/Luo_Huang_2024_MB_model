@@ -1,8 +1,8 @@
 clear all
 clc
 config_path_and_function
-% load('Dx_steady_state_nonlinear_3_27-Mar-2023_3modules') %% Fig5i
-load('Dx_steady_state_nonlinear_3_27-Mar-2023_2modules') %% Extended Data Fig10m
+load('Dx_steady_state_nonlinear_3_27-Mar-2023_3modules') %% Fig5i
+% load('Dx_steady_state_nonlinear_3_27-Mar-2023_2modules') %% Extended Data Fig10m
 
 
 %%
@@ -18,7 +18,7 @@ switch figure_type
         odor_valence = [2.57;2.24;3.35]; % BEN/OCT
 end
 
-% para_mu([12,13,15,18,19],1) = 0; % disconnect MBON-v1 feedbacks; for Extended Data Fig10h
+%para_mu([12,13,15,18,19],1) = 0; % disconnect MBON-v1 feedbacks; for Extended Data Fig10h
 para_mat_cell = reset_parameter_by_valance(para_mu,mat_lu_cell,odor_valence);
 
 shock_strength = 1.5; % shock intensity
@@ -95,18 +95,43 @@ for t_extinction_i = 1:length(t_extinction_list)
     
 end
 
-% figure
-% J = customcolormap([0 0.25 0.375 0.5 0.625 0.75 1], {'#8B008B','#C71585','#FA8072','#FFFAFA','#48D1CC','#4682B4','#000000'});
-% 
-% colormap(J);
-% axis_h = zeros(3,6);
-% for row_i = 1:3
-%     for col_i = 1:6
-%         axis_h(row_i,col_i) = subplot(3,6,(row_i-1)*6+col_i); hold on;
-%         imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
-%                 output_data_matrix(:,:,row_i,col_i),[-40,40])
-%     end
-% end
+%% Extended Data Figure 10h
+paper_size=[11 6];
+
+fig_h=figure('Units','inches', ...
+             'Papersize', paper_size, ...
+             'PaperPosition', [0 0, paper_size], ...
+             'Position',[0.5 0.5 paper_size]);
+J = customcolormap([0 0.25 0.375 0.5 0.625 0.75 1], {'#8B008B','#C71585','#FA8072','#FFFAFA','#48D1CC','#4682B4','#000000'});
+ 
+colormap(J);
+axis_h = zeros(3,6);
+for row_i = 1:3
+    for col_i = 1:6
+        axis_h(row_i,col_i) = subplot(3,6,(row_i-1)*6+col_i); hold on;
+        if row_i <= 2
+            imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
+                output_data_matrix(:,:,row_i,col_i)-Dx_DAN_MBON(6,row_i,1),[-40,40])
+        else
+            imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
+                output_data_matrix(:,:,row_i,col_i),[-40,40])
+        end
+    end
+end
+
+set(axis_h,'box','off','YDir','normal', ...
+    'YLim',[0.5,length(t_extinction_list) + 0.5], ...
+    'YTick',1:length(t_extinction_list), ...
+    'YTickLabel',[{'Ctr'};cellstr(num2str(t_extinction_list(2:end)'/60))], ...
+    'XTick',0:3)
+
+cell_name = {'DAN-\gamma1', 'DAN-\alpha2', 'DAN-\alpha3', ...
+             'MBON-\gamma1','MBON-\alpha2','MBON-\alpha3'};
+for col_i = 1:size(axis_h,2)
+    title_str = [cell_name{col_i},'(',figure_type(1:3),'/',figure_type(5:7),')'];
+    title(axis_h(1,col_i),title_str)
+end
+%}
 
 switch figure_type
     case 'ACV_EtA'
@@ -140,7 +165,7 @@ title('CS+ induced (Repulsive odors)')
 
 subplot(3,2,3)
 imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
-    output_data_matrix_attractive(:,:,2,6)-Dx_DAN_MBON(6,1,1),[-40,40])
+    output_data_matrix_attractive(:,:,2,6)-Dx_DAN_MBON(6,2,1),[-40,40])
 xlabel('Time (hr)','FontSize', 15)
 set(gca,'YTickLabel',[]);
 title('CS– induced (Attractive odors)')
@@ -148,7 +173,7 @@ title('CS– induced (Attractive odors)')
 
 subplot(3,2,4)
 imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
-    output_data_matrix_repulsive(:,:,2,6)-Dx_DAN_MBON(6,1,1),[-40,40])
+    output_data_matrix_repulsive(:,:,2,6)-Dx_DAN_MBON(6,2,1),[-40,40])
 xlabel('Time (hr)','FontSize', 15)
 set(gca,'YTickLabel',[]);
 title('CS– induced (Repulsive odors)')

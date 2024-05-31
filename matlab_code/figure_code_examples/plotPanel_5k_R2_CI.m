@@ -7,7 +7,7 @@ odor_valence = [-3.42;-4.58;-5.60]; % ACV/EtA
 
 t_extinction_list = [nan 10]*60-300-250;
 rest_t_list = 2100-300-250;
-
+output_data_matrix = nan(length(para_rand),3,3,6,length(t_extinction_list));
 for i = 1:length(para_rand)
 
     para_mat_cell = reset_parameter_by_valance(para_rand(:,i),mat_lu_cell,odor_valence);
@@ -71,7 +71,7 @@ for i = 1:length(para_rand)
             if exp_para.rest_t >= 0
                 [Dx_DAN_MBON{i},data_all] = Dx_steady_state_MBON_revision(para_mat_cell,exp_struct);
                 % Dx_DAN_MBON: first dimension: DAN,MBON; second dimension: CS+, CS-
-                output_data_matrix(i,:,1:2,:,t_extinction_i) = permute(Dx_DAN_MBON{i}(:,:,:),[4 3 2 5 1]);
+                output_data_matrix(i,:,1:2,:,t_extinction_i) = permute(Dx_DAN_MBON{i}(:,:,[1 2 end]),[4 3 2 1 5]);
 
             elseif rest_t_list(rest_t_i) <= t_extinction_curr
                 output_data_matrix(i,:,1:2,:,t_extinction_i) = ...
@@ -108,6 +108,7 @@ for i = 1:2
 end
 
 %% plot MBON-a3
+figure
 X = 1:2;
 bar(X,MemoryTrace_ratio_avg{6,1})
 box off

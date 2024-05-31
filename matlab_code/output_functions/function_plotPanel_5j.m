@@ -116,9 +116,13 @@ axis_h = zeros(3,6);
 for row_i = 1:3
     for col_i = 1:6
         axis_h(row_i,col_i) = subplot(3,6,(row_i-1)*6+col_i); hold on;
-        imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
+        if row_i <= 2
+            imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
+                output_data_matrix(:,:,row_i,col_i)-Dx_DAN_MBON(6,row_i,1),[-40,40])
+        else
+            imagesc(rest_t_list/3600,1:length(t_extinction_list), ...
                 output_data_matrix(:,:,row_i,col_i),[-40,40])
-    
+        end
     end
 end
 
@@ -129,14 +133,12 @@ set(axis_h,'box','off','YDir','normal', ...
     'YTickLabel',[{'Ctr'};cellstr(num2str(t_extinction_list(2:end)'/60))], ...
     'XTick',0:3)
 
-title(axis_h(1,1),'DAN-v1')
-title(axis_h(1,2),'DAN-a2')
-title(axis_h(1,3),'DAN-a3')
-
-title(axis_h(1,4),'MBON-v1')
-title(axis_h(1,5),'MBON-a2')
-title(axis_h(1,6),'MBON-a3')
-
+cell_name = {'DAN-\gamma1', 'DAN-\alpha2', 'DAN-\alpha3', ...
+             'MBON-\gamma1','MBON-\alpha2','MBON-\alpha3'};
+for col_i = 1:size(axis_h,2)
+    title_str = [cell_name{col_i},'(',figure_type(1:3),'/',figure_type(5:7),')'];
+    title(axis_h(1,col_i),title_str)
+end
 %%
 %{
 if ~isempty(figure_name)
