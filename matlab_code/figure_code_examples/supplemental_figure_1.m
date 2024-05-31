@@ -64,7 +64,8 @@ para_name = {'{\itA_{AH}}(0)';
              '\tau_{{\itKC},{\itrecover}}'};
 
 x = (1:16)';
-%%
+%% vertical version
+%{
 figure, hold on
 %boxplot(para_ratio')
 
@@ -78,8 +79,8 @@ plot([0 17],[1 1],'k--')
 set(gca,'YScale','log','XTick',x,'XTickLabel',para_name,'XTickLabelRotation',90, ...
     'XLim',[0 17], 'YLim', [0.1 10])
 ylabel('parameter ratio (2-module model/3-module model)')
-
-%%
+%}
+%% horizontal version
 figure, hold on
 %boxplot(para_ratio')
 x = (1:16)';
