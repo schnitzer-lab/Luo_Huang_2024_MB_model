@@ -14,13 +14,33 @@ Demo and Instructions for use
   
   The original data is in the file “data_and_parameters\Imaging_24hr_data.xlsx”.
   
-  The code for fitting the experimental data is in the folder “matlab_code\model_fitting”. This code reads the original data and outputs the optimized data for the recurrent equation model. The time needed for parameter optimization is ~2 min. 
+  The code for fitting the experimental data is in the folder “matlab_code\model_fitting”. The code "fit_nonlinear_models.m" reads the original data file “Imaging_24hr_data.xlsx” and outputs the optimized data for the recurrent equation model into the folder “data_and_parameters”. The time needed for parameter optimization is ~2 min. 
   
-  The parameters from curve fitting are the files “Dx_steady_state_nonlinear_3_27-Mar-2023_2modules.mat” and “Dx_steady_state_nonlinear_3_27-Mar-2023_3modules.mat” in folder “data_and_parameters”.
+  The parameters from curve fitting are the files “Dx_steady_state_nonlinear_3_27-Mar-2023_2modules.mat” and “Dx_steady_state_nonlinear_3_27-Mar-2023_3modules.mat” in folder “data_and_parameters”. “Dx_steady_state_nonlinear_3_27-Mar-2023_2modules.mat” stores the parameters of the 2-module model. “Dx_steady_state_nonlinear_3_27-Mar-2023_3modules.mat” stores the parameters of the 3-module model. 
   
   The functions used for reading and writing data and figures are in the folder “matlab_code\output_functions”.
   
-  The example codes for drawing figures in the paper are in the folder “matlab_code\figure_code_examples”.
+  The example codes for drawing figures in the paper are in the folder “matlab_code\figure_code_examples”. 
+ 
+    'plotPanel_5c_S10j_R2_CI.m'  plots Figure 5c and Extended data Figure 10j.
+    
+    'plotPanel_5d_S10h_S10m.m'   plots Figure 5d.
+    
+    'plotPanel_5e_R2.m'          plots Figure 5e.
+    
+    'plotPanel_5f_R2_CI.m'       plots Figure 5f.
+    
+    'plotPanel_5g_R2_CI.m'       plots Figure 5g and Extended data Figure 10l.
+    
+    'plotPanel_5h_R2_CI.m'       plots Figure 5h.
+    
+    'plotPanel_5i_R2.m'          plots Figure 5i and Extended data Figure 10m.
+    
+    'plotPanel_5j_R2_CI.m'       plots Figure 5j.
+    
+    'plotPanel_5k_R2_CI.m'       plots Figure 5k.
+    
+    'supplemental_figure_1.m'    plots Supplemental Figure 1 in Appendix.
 
 License
   
