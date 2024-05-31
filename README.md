@@ -10,7 +10,7 @@ Installation guide
 
 Demo and Instructions for use
   
-    The functions of the recurrent equation model are in the folder “matlab_code\model_functions”. The time needed to simulate each set of parameters for the recurrent equation model is ~0.02 s.
+    The functions of the recurrent equation model are in the folder “matlab_code\model_functions”. The time needed to simulate each set of parameters for the recurrent equation model is ~0.02 s. To generate the confidence interval (CI) in figures by simulating 10000 sets of randomly sampled parameters takes ~4 min. 
     
     The original data is in the file “data_and_parameters\Imaging_24hr_data.xlsx”.
     
