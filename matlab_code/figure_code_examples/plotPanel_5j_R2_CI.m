@@ -16,7 +16,7 @@ for figure_type_i= 1:length(figure_type_list)
     end
 
     t_extinction_list = [nan 10 120]*60-300-250;
-
+    output_data_matrix = nan(length(para_rand),6,3,6,length(t_extinction_list));
     for i = 1:length(para_rand)
 
         para_mat_cell = reset_parameter_by_valance(para_rand(:,i),mat_lu_cell,odor_valence);
@@ -81,8 +81,13 @@ for figure_type_i= 1:length(figure_type_list)
 
                 if exp_para.rest_t >= 0
                     [Dx_DAN_MBON{i},data_all] = Dx_steady_state_MBON_revision(para_mat_cell,exp_struct);
-                    % Dx_DAN_MBON: first dimension: DAN,MBON; second dimension: CS+, CS-
-                    output_data_matrix(i,:,1:2,:,t_extinction_i) = permute(Dx_DAN_MBON{i}(:,:,:),[4 3 2 5 1]);
+                    %{
+                    Dx_DAN_MBON: 
+                    first dimension: DAN,MBON; 
+                    second dimension: CS+, CS-; 
+                    third dimension: time points.
+                    %}
+                    output_data_matrix(i,:,1:2,:,t_extinction_i) = permute(Dx_DAN_MBON{i}(:,:,:),[4 3 2 1 5]);
 
                 elseif rest_t_list(rest_t_i) <= t_extinction_curr
                     output_data_matrix(i,:,1:2,:,t_extinction_i) = ...
