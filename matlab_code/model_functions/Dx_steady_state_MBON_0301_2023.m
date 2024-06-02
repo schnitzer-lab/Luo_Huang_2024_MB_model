@@ -14,7 +14,7 @@ w_pun = [27.85;0;11.38;0;0;0];
 B_MBON = [35.2; 9.0; 11.2];% new baseline value % from file OdorData(revision).xlsx
 max_MBON = B_MBON +[36.46; 8.9; 19.96];% ~ mean + std
 
-KC_adapt = 0.05;% the adaptation 
+KC_adapt = 0.05;% the adaptation rate of KCs, = 1/tau_KC_adapt.
 %% input parameters
 
 fw0 = para_mat_cell{2};%*eye(2);%
